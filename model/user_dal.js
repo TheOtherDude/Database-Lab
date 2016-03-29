@@ -8,7 +8,7 @@ var db  = require('./db_connection.js');
 var connection = mysql.createConnection(db.config);
 
 exports.GetAll = function(callback) {
-    connection.query('SELECT first_name, last_name FROM user;',
+    connection.query('SELECT first_name, last_name, user_id FROM user;',
         function (err, result) {
             if(err) {
                 console.log(err);

@@ -1,10 +1,18 @@
-<% if(rs.length > 0) { %>
-Title: <%= rs[0].movie_title %>
-<ul>
-    <% for(var i=0; i < rs.length; i++) {%>
-    <li><%= rs[i].genre_name %></li>
+<div>
+    <% if(rs.length > 0) { %>
+    <table border="1">
+        <tr>
+            <th>Movie Title</th>
+            <th>Rating</th>
+        </tr>
+        <% for (var i=0; rs.length > i; i++) { %>
+        <tr>
+            <td><%= rs[i].title %></td>
+            <td><%= rs[i].rating %></td>
+        </tr>
+        <% } %>
+    </table>
+    <% } else { %>
+    <p>This user has not rated anything!</p>
     <% } %>
-</ul>
-<% } else { %>
-No movies rated by user id <%= user_id %>.
-<% } %>
+</div>
