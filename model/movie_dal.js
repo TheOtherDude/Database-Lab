@@ -34,3 +34,29 @@ exports.GetByID = function(movie_id, callback) {
         }
      );
  }
+
+exports.Insert = function(movie, callback) {
+
+    console.log(movie);
+
+    var dynamic_query = 'INSERT INTO movie (title, tagline) VALUES (' +
+        '\'' + movie.title + '\', ' +
+        '\'' + movie.tagline + '\' ' +
+        ');';
+
+    console.log(dynamic_query);
+
+    connection.query(dynamic_query,
+        function (err, result) {
+
+            if(err) {
+
+                console.log(err);
+                callback(true);
+                return;
+            }
+
+            callback(false, result);
+        }
+    );
+}

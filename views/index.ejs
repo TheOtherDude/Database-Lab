@@ -1,25 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title><%= title %></title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
-<body>
-<div id="header">
-  <img src="http://www.cs.sonoma.edu/~haderman/cs355/labs/cs355.png" alt="cs355 header">
-</div>
-<div id="nav">
-  <a href="http://www.cs.sonoma.edu/~haderman/">CS355</a>
-  <br />
-  <a href="http://localhost:3000/helloworld.html">Absolute Link Example</a>
-  <br />
-  <a href="/movie/all">Get All Movies</a>
-  <br />
-  <a href="/movie/create">Insert New Movie</a> <br />
-  <a href="http://cs.sonoma.edu/~haderman/cs355/">CS355</a> <br />
-  <a href="http://cs.sonoma.edu/">CS Department</a> <br />
-  <a href="http://www.sonoma.edu/">Sonoma State University</a>
-</div>
+<% include partials/header %>
 <div id="content">
   <table>
   <tr>
@@ -62,14 +41,4 @@
   </ul>
   <button id="alert">Click Me</button>
 </div>
-<div id="footer">
-  Copyright © W3Schools.com
-</div>
-<script>
-  document.getElementById("alert").onclick = function () {
-    alert("This is a message!");
-  }
-</script>
-</body>
-</html>
-
+<% include partials/footer %>

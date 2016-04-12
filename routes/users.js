@@ -10,6 +10,21 @@ router.get('/all', function(req, res) {
   );
 });
 
+router.get('/create', function(req, res, next) {
+    res.render('userFormCreate.ejs');
+});
+
+router.get('/save', function(req, res, next) {
+    userDal.Insert(req.query, function(err, result){
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send("Successfully saved the user.");
+        }
+    });
+});
+
 
 router.get('/', function (req, res) {
   userDal.GetByID(req.query.user_id, function (err, result) {
