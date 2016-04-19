@@ -34,6 +34,13 @@
             exactly as the <input> text type -->
     <label for="password">Pasword</label> <input type="password" id="password" name="password" /><br />
 
+    <label for="state">State</label>
+    <select id="state" name="state">
+    <% for( var i = 0; i < states.length; i++) { %>
+    <option><%=states[i].state%></option>
+    <% } %>
+    </select>
+
     <!-- .the <input> type submit, creates a button. If the button is within the <form></form> tags, when it is clicked
           it will send the form information to the url specified in the action attribute.
     -->

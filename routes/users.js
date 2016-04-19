@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userDal = require('../model/user_dal');
+var stateDal = require('../model/state_dal');
 
 router.get('/all', function(req, res) {
   userDal.GetAll(function (err, result) {
@@ -11,7 +12,10 @@ router.get('/all', function(req, res) {
 });
 
 router.get('/create', function(req, res, next) {
-    res.render('userFormCreate.ejs');
+    stateDal.GetAll(function(err, result) {
+        if (err) throw err;
+        res.render('userFormCreate.ejs', {states: result});
+    });
 });
 
 router.get('/save', function(req, res, next) {
