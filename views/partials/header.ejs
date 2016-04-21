@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>Database Management Systems</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <% if (typeof js_includes !== 'undefined') { %>
+    <% for(var i=0; i < js_includes.length; i++) { %>
+    <script src="<%= js_includes[i] %>"></script>
+    <% }%>
+    <% }%>
 </head>
 <body>
 <div id="header">
@@ -22,4 +27,6 @@
     <a href="http://www.sonoma.edu/">Sonoma State University</a> <br />
     <a href="/users/all">Get All Users</a> <br />
     <a href="/users/create">Create a New User</a> <br />
+    <a href="/genre/new">Create a New Genre</a> <br />
+    <a href="/state/new">Create a New State</a> <br />
 </div>

@@ -33,3 +33,10 @@ ADD state_id INT;
 ALTER TABLE user
 ADD FOREIGN KEY (state_id)
 REFERENCES state(state_id);
+
+ALTER TABLE user
+DROP FOREIGN KEY fk_state_id;
+
+SELECT * from user_info_view;
+
+SELECT * from rating;

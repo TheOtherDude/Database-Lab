@@ -10,3 +10,10 @@ exports.GetAll = function(callback) {
         callback(err, result);
     });
 }
+
+exports.Insert = function(state_name, callback) {
+    var qry = "INSERT INTO state (state) VALUES (?)";
+    connection.query(qry, state_name, function(err, result){
+        callback(err, result);
+    });
+};

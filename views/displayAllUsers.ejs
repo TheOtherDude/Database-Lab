@@ -9,6 +9,10 @@
         <tr>
             <td><a href="/users/?user_id=<%= rs[i].user_id %>"> <%= rs[i].first_name %></a></td>
             <td><a href="/users/?user_id=<%= rs[i].user_id %>"> <%= rs[i].last_name %></a></td>
+            <td>
+                <a href="/users/delete/?user_id=<%= rs[i].user_id %>">Delete</a>
+                <a href="/users/edit/?user_id=<%= rs[i].user_id %>">Edit</a>
+            </td>
         </tr>
         <% } %>
     </table>

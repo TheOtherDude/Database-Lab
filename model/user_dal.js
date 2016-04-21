@@ -22,9 +22,25 @@ exports.GetAll = function(callback) {
 }
 
 
-exports.GetByID = function(user_id, callback) {
+exports.GetUserRatingsByID = function(user_id, callback) {
     console.log(user_id);
     var query = 'SELECT * FROM user_info_view WHERE user_id=' + user_id;
+    console.log(query);
+    connection.query(query,
+        function (err, result) {
+            if(err) {
+                console.log(err);
+                callback(true);
+                return;
+            }
+            callback(false, result);
+        }
+    );
+}
+
+exports.GetUserDataByID = function(user_id, callback) {
+    console.log(user_id);
+    var query = 'SELECT * FROM user WHERE user_id=' + user_id;
     console.log(query);
     connection.query(query,
         function (err, result) {
@@ -57,11 +73,12 @@ exports.Insert = function(user, callback) {
      then we would not need to have them wrapped in quotes; i.e. + '\'' + the_value + '\''
      NOTE 2: My account table has auto incrementing IDs, but I do not submit values for them.
      */
-    var dynamic_query = 'INSERT INTO user (first_name, last_name, email, password) VALUES (' +
+    var dynamic_query = 'INSERT INTO user (first_name, last_name, email, password, state_id) VALUES (' +
         '\'' + user.firstname + '\', ' +
         '\'' + user.lastname + '\', ' +
         '\'' + user.email + '\', ' +
-        '\'' + user.password + '\'' +
+        '\'' + user.password + '\', ' +
+        '\'' + user.state_id + '\'' +
         ');';
 
     /* this console.log() will print out the query I'm about to send to the MySQL server via the connection.query() method.
@@ -100,4 +117,28 @@ exports.Insert = function(user, callback) {
             callback(false, result);
         }
     );
+}
+
+exports.DeleteById = function(user_id, callback) {
+    var qry = 'DELETE FROM user WHERE user_id = ?';
+    connection.query(qry, [user_id],
+        function (err) {
+            callback(err);
+        });
+}
+
+
+exports.Update = function(user_id, first_name, last_name, email, password, state_id, callback) {
+    var values = [first_name, last_name, email, password, state_id, user_id];
+    console.log("Values:", values);
+    connection.query('UPDATE user SET first_name = ?, last_name = ?, email = ?, password= ?, state_id = ? WHERE user_id = ?', values,
+        function(err, result){
+            if(err) {
+                console.log(this.sql);
+                callback(err, null);
+            }
+            else {
+                callback(null, result);
+            }
+        });
 }

@@ -35,9 +35,9 @@
     <label for="password">Pasword</label> <input type="password" id="password" name="password" /><br />
 
     <label for="state">State</label>
-    <select id="state" name="state">
+    <select id="state" name="state_id">
     <% for( var i = 0; i < states.length; i++) { %>
-    <option><%=states[i].state%></option>
+    <option value="<%= i %>"><%=states[i].state%></option>
     <% } %>
     </select>
 

@@ -15,7 +15,7 @@ exports.GetAll = function(callback){
 };
 
 exports.Insert = function(genre_name, callback) {
-    var qry = "INSERT INTO genre (name) VALUES (?)";
+    var qry = "INSERT INTO genre (genre) VALUES (?)";
     connection.query(qry, genre_name, function(err, result){
         callback(err, result);
     });
