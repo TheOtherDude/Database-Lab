@@ -19,6 +19,21 @@ exports.GetAll = function(callback) {
 }
 
 
+exports.GetAllTitles = function(callback) {
+    connection.query('SELECT movie_id, title FROM movie;',
+        function (err, result) {
+            if(err) {
+                console.log(err);
+                callback(true);
+                return;
+            }
+            console.log(result);
+            callback(false, result);
+        }
+    );
+}
+
+
 exports.GetByID = function(movie_id, callback) {
      console.log(movie_id);
      var query = 'SELECT * FROM movie_info_view WHERE movie_id=' + movie_id;

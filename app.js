@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -25,12 +26,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({secret: 'lab11'}));
+
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/movie', movie);
-app.use('/genre', genre);
-app.use('/state', state);
+var restrict = function (req, res, next){
+  if(req.session.account) { //check if user is authenticated yet
+    next();  //user logged in so proceed to requested page
+  }
+  else {
+    req.session.originalUrl = req.originalUrl;
+    res.redirect('/login');  // they aren't so ask them to login
+  }
+};
+app.use('/users', restrict, users);
+app.use('/movie', restrict, movie);
+app.use('/genre', restrict, genre);
+app.use('/state', restrict, state);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

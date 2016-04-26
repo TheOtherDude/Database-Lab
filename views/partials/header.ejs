@@ -10,6 +10,13 @@
     <% }%>
 </head>
 <body>
+<div style="float:right;">
+    <% if(typeof first_name !== "undefined") { %>
+    Welcome, <%= first_name %>
+    <% } else { %>
+    <a href="/login">Login</a>
+    <% } %>
+</div>
 <div id="header">
     <!--<img src="http://www.cs.sonoma.edu/~haderman/cs355/labs/cs355.png" alt="cs355 header">-->
     CS355 Database Management Systems
@@ -29,4 +36,5 @@
     <a href="/users/create">Create a New User</a> <br />
     <a href="/genre/new">Create a New Genre</a> <br />
     <a href="/state/new">Create a New State</a> <br />
+    <% if(typeof first_name !== "undefined") { %><a href="/logout">Logout</a><% } %>
 </div>

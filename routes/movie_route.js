@@ -4,7 +4,7 @@ var movieDal = require('../model/movie_dal');
 var genreDal = require('../model/genre_dal');
 
 router.get('/all', function(req, res) {
-    movieDal.GetAll(function (err, result) {
+    movieDal.GetAllTitles(function (err, result) {
             if (err) throw err;
             res.render('displayAllMovies.ejs', {rs: result});
         }

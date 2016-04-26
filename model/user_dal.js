@@ -1,16 +1,16 @@
 /**
  * Created by Phillip on 3/28/2016.
  */
-var mysql   = require('mysql');
-var db  = require('./db_connection.js');
+var mysql = require('mysql');
+var db = require('./db_connection.js');
 
 /* DATABASE CONFIGURATION */
 var connection = mysql.createConnection(db.config);
 
-exports.GetAll = function(callback) {
+exports.GetAll = function (callback) {
     connection.query('SELECT first_name, last_name, user_id FROM user;',
         function (err, result) {
-            if(err) {
+            if (err) {
                 console.log(err);
                 callback(true);
                 return;
@@ -22,13 +22,13 @@ exports.GetAll = function(callback) {
 }
 
 
-exports.GetUserRatingsByID = function(user_id, callback) {
+exports.GetUserRatingsByID = function (user_id, callback) {
     console.log(user_id);
     var query = 'SELECT * FROM user_info_view WHERE user_id=' + user_id;
     console.log(query);
     connection.query(query,
         function (err, result) {
-            if(err) {
+            if (err) {
                 console.log(err);
                 callback(true);
                 return;
@@ -38,13 +38,13 @@ exports.GetUserRatingsByID = function(user_id, callback) {
     );
 }
 
-exports.GetUserDataByID = function(user_id, callback) {
+exports.GetUserDataByID = function (user_id, callback) {
     console.log(user_id);
     var query = 'SELECT * FROM user WHERE user_id=' + user_id;
     console.log(query);
     connection.query(query,
         function (err, result) {
-            if(err) {
+            if (err) {
                 console.log(err);
                 callback(true);
                 return;
@@ -62,7 +62,7 @@ exports.GetUserDataByID = function(user_id, callback) {
  the callback parameter is an anonymous function passed like a parameter, that will be run later on within
  this function.
  */
-exports.Insert = function(user, callback) {
+exports.Insert = function (user, callback) {
     /* this console.log() will print out the account information that the function receives.  this is useful
      to see if the information I think i'm sending to this function is really being received.
      */
@@ -83,7 +83,8 @@ exports.Insert = function(user, callback) {
 
     /* this console.log() will print out the query I'm about to send to the MySQL server via the connection.query() method.
      this log message can be copied and pasted into MySQL workbench to see if there are any SQL syntax errors.
-     */console.log("test");
+     */
+    console.log("test");
     console.log(dynamic_query);
 
     // connection.query(query, is where the SQL string we built above is actually sent to the MySQL server to be run
@@ -100,7 +101,7 @@ exports.Insert = function(user, callback) {
         function (err, result) {
 
             // if the err parameter isn't null or 0, then it will run the code within the if statement
-            if(err) {
+            if (err) {
                 /* this section of code prints out the error to the console and then runs the function that was
                  passed to exports.Insert().
                  */
@@ -119,7 +120,7 @@ exports.Insert = function(user, callback) {
     );
 }
 
-exports.DeleteById = function(user_id, callback) {
+exports.DeleteById = function (user_id, callback) {
     var qry = 'DELETE FROM user WHERE user_id = ?';
     connection.query(qry, [user_id],
         function (err) {
@@ -128,12 +129,12 @@ exports.DeleteById = function(user_id, callback) {
 }
 
 
-exports.Update = function(user_id, first_name, last_name, email, password, state_id, callback) {
+exports.Update = function (user_id, first_name, last_name, email, password, state_id, callback) {
     var values = [first_name, last_name, email, password, state_id, user_id];
     console.log("Values:", values);
     connection.query('UPDATE user SET first_name = ?, last_name = ?, email = ?, password= ?, state_id = ? WHERE user_id = ?', values,
-        function(err, result){
-            if(err) {
+        function (err, result) {
+            if (err) {
                 console.log(this.sql);
                 callback(err, null);
             }
@@ -141,4 +142,25 @@ exports.Update = function(user_id, first_name, last_name, email, password, state
                 callback(null, result);
             }
         });
+}
+
+
+exports.GetByEmail = function (email, password, callback) {
+    var query = 'CALL Account_GetByEmail(?, ?)';
+    var query_data = [email, password];
+
+    connection.query(query, query_data, function (err, result) {
+        if (err) {
+            callback(err, null);
+        }
+        /* NOTE: Stored Procedure results are wrapped in an extra array
+         /* and only one user record should be returned,
+         // so return only the one result*/
+        else if (result[0].length == 1) {
+            callback(err, result[0][0]);
+        }
+        else {
+            callback(err, null);
+        }
+    });
 }
