@@ -11,8 +11,8 @@
 </head>
 <body>
 <div style="float:right;">
-    <% if(typeof first_name !== "undefined") { %>
-    Welcome, <%= first_name %>
+    <% if(typeof firstname !== "undefined") { %>
+    Welcome, <%= firstname %>
     <% } else { %>
     <a href="/login">Login</a>
     <% } %>
@@ -36,5 +36,5 @@
     <a href="/users/create">Create a New User</a> <br />
     <a href="/genre/new">Create a New Genre</a> <br />
     <a href="/state/new">Create a New State</a> <br />
-    <% if(typeof first_name !== "undefined") { %><a href="/logout">Logout</a><% } %>
+    <% if(typeof firstname !== "undefined") { %><a href="/logout">Logout</a><% } %>
 </div>

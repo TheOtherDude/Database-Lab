@@ -1,0 +1,18 @@
+
+<% var js_includes = ['https://code.jquery.com/jquery-1.12.3.min.js', '/javascripts/signup_ajax.js']%>
+<% include partials/header %>
+<form>
+ <label for="firstname">First Name</label> <input type="text" id="firstname" name="firstname" /><br />
+ <label for="lastname">Last Name</label> <input type="text" id="lastname" name="lastname" /><br />
+ <label for="email">Email</label> <input type="text" id="email" name="email" /><br />
+ <label for="password">Pasword</label> <input type="password" id="password" name="password" /><br />
+ <label for="state">State</label>
+ <select id="state" name="state_id">
+  <% for( var i = 0; i < states.length; i++) { %>
+  <option value="<%= i %>"><%=states[i].state%></option>
+  <% } %>
+ </select>
+ <button id="signupBtn">Yay!</button>
+</form>
+
+<% include partials/footer %>

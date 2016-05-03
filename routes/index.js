@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userDal = require('../model/user_dal');
+var stateDal = require('../model/state_dal');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -12,7 +13,7 @@ router.get('/', function(req, res, next) {
     res.render('index', data);
   }
   else {
-    data.firstname = req.session.account.firstname;
+    data.firstname = req.session.account.first_name;
     res.render('index', data);
   }
 });
@@ -33,7 +34,7 @@ router.post('/authenticate', function(req, res) {
     }
     else {
       req.session.account = account;
-      res.redirect('/');
+      //res.redirect('/');
     }
   });
 });
@@ -42,6 +43,24 @@ router.post('/authenticate', function(req, res) {
 router.get('/login', function(req, res) {
   res.render('authentication/login.ejs');
 });
+
+router.get('/signup', function(req, res) {
+  stateDal.GetAll(function(err, result) {
+    if (err) throw err;
+    res.render('signup.ejs', {states: result});
+  });
+});
+
+router.post('/signUp', function(req, res) {
+  userDal.Insert(req.body, function(err, result){
+    if (err) {
+      res.send(err);
+    }
+    else {
+      res.send("Welcome");
+    }
+  });
+})
 
 
 router.get('/logout', function(req, res) {
