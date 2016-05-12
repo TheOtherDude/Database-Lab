@@ -9,16 +9,11 @@ loginAjax = function() {
     };
 
     // Next we configure the jQuery ajax call
-    $.ajax({
-        url: '/authenticate',  // url where we want to send the form data
-        type: 'POST', // the type of form submission; GET or POST
-        contentType: "json",  // the type of data we are sending
-        data: payload,  // the actual data we are sending
-        complete: function(data) {
+    $.post('/authenticate', payload, function(data) {
             console.log(data);
+            console.log(payload);
             window.location.replace('/');
-        }
-    });
+        });
 }
 
 

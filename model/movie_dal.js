@@ -147,4 +147,46 @@ var Delete = function(movie_id, callback) {
         });
 };
 
+exports.AddRating = function(rating, user_id, movie_id, callback) {
+    var qry = "CALL Add_Rating (?, ?, ?)";
+    var qry_data = [rating, user_id, movie_id];
+    
+    connection.query(qry, qry_data, function(err, result) {
+        if (err) {
+            callback(err, null);
+        }
+        else {
+            callback(null, result);
+        }
+    })
+}
+
+exports.UpdateRating = function(rating, user_id, movie_id, callback) {
+    var qry = "CALL Update_Rating (?, ?, ?)";
+    var qry_data = [rating, user_id, movie_id];
+
+    connection.query(qry, qry_data, function(err, result) {
+        if (err) {
+            callback(err, null);
+        }
+        else {
+            callback(null, result);
+        }
+    })
+}
+
+exports.GetRatingByIds = function (movie_id, user_id, callback) {
+    var qry = "CALL Get_Rating_With_IDs (?, ?);";
+    var qry_data = [movie_id, user_id];
+
+    connection.query(qry, qry_data, function(err, result) {
+        if (err) {
+            callback(err, null);
+        }
+        else {
+            callback(null, result[0][0]);
+        }
+    });
+}
+
 exports.DeleteById = Delete;

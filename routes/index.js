@@ -34,6 +34,7 @@ router.post('/authenticate', function(req, res) {
     }
     else {
       req.session.account = account;
+      res.send("success");
       //res.redirect('/');
     }
   });
@@ -51,13 +52,26 @@ router.get('/signup', function(req, res) {
   });
 });
 
-router.post('/signUp', function(req, res) {
+router.post('/signup', function(req, res) {
   userDal.Insert(req.body, function(err, result){
     if (err) {
       res.send(err);
     }
     else {
-      res.send("Welcome");
+      userDal.GetByEmail(req.body.email, req.body.password, function (err, account) {
+        if (err) {
+          res.send(err);
+          console.log("You got an error");
+        }
+        else if (account == null) {
+          res.send("Account not found.");
+        }
+        else {
+          req.session.account = account;
+          res.send("Welcome");
+          //res.redirect('/');
+        }
+      });
     }
   });
 })

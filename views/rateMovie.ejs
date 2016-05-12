@@ -1,0 +1,24 @@
+<% var js_includes = ['https://code.jquery.com/jquery-1.12.3.min.js', '/javascripts/rate_ajax.js']%>
+
+<% include partials/header %>
+
+<div>
+    <h1><%=rs.title%></h1>
+    <form>
+        <label for="rating">Rating</label>
+        <select id="rating" name="rating">
+            <% for( var i = 1; i <= 10; i++) { %>
+            <option value="<%= i %>"
+                    <% if (i == rs.rating) {%>
+                    selected="selected"
+                    <% } %>><%=i%>
+            </option>
+            <% } %>
+        </select>
+        <button id="rateBtn">Rate!</button>
+        <input type="hidden" id="movie_id" value="<%=rs.movie_id%>">
+        <input type="hidden" id="user_id" value="<%=rs.user_id%>">
+        <input type="hidden" id="new" value="<%=rs.new%>">
+    </form>
+    <div hidden>Rating updated!</div>
+</div>

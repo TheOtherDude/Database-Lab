@@ -59,6 +59,61 @@ router.post('/insert_movie', function(req, res) {
         });
 });
 
+router.get('/rate', function(req, res){
+    console.log('/rate movie_id:' + req.query.movie_id);
+
+    movieDal.GetRatingByIds(req.query.movie_id, req.session.account.user_id, function(err, title_and_rating){
+        if(err) {
+            console.log(err);
+            res.send('error: ' + err);
+        }
+        else if (title_and_rating === undefined) {
+            console.log("no rating for that movie and user");
+            movieDal.GetByID(req.query.movie_id, function(err, result) {
+                title_and_rating = {};
+                title_and_rating.title = result.length == 1 ? result.title : result[0].title;
+                title_and_rating.rating = "";
+                title_and_rating.movie_id = req.query.movie_id;
+                title_and_rating.user_id = req.session.account.user_id;
+                title_and_rating.new = true;
+                res.render('rateMovie', {rs: title_and_rating});
+            });
+        }
+        else {
+            console.log(title_and_rating);
+            title_and_rating.movie_id = req.query.movie_id;
+            title_and_rating.user_id = req.session.account.user_id;
+            title_and_rating.new = false;
+            res.render('rateMovie', {rs: title_and_rating});
+        }
+    });
+});
+
+router.post('/sendRating', function(req, res) {
+    if (req.body.new === "true") {
+        movieDal.AddRating(req.body.rating, req.body.user_id, req.body.movie_id, function(err, result) {
+            if (err) {
+                console.log(err);
+                res.send("Error");
+            }
+            else {
+                res.send("Success");
+            }
+        });
+    }
+    else {
+        movieDal.UpdateRating(req.body.rating, req.body.user_id, req.body.movie_id, function(err, result) {
+            if (err) {
+                console.log(err);
+                res.send("Error");
+            }
+            else {
+                res.send("Success");
+            }
+        });
+    }
+});
+
 router.get('/edit', function(req, res){
     console.log('/edit movie_id:' + req.query.movie_id);
 
